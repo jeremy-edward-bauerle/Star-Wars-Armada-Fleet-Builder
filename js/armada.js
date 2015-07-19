@@ -63,6 +63,8 @@ $(document).ready(function(){
 
 		// generate squadron select options
 
+		// Show the hidden Ship data button on xs displays
+		$("#ship-data").removeClass("hidden").addClass("visible-xs");
 		// Show the hidden fleet list div
 		$("#fleet-list").removeClass("hidden");
 
