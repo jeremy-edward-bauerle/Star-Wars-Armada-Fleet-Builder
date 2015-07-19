@@ -49,6 +49,67 @@ $(document).ready(function(){
 		  ]
 		};
 
+	var squadrons = {
+		"rebels": [
+			{	"name": "A-wings",
+				"points": 11
+			},
+			{	"name": "B-wings",
+				"points": 14
+			},
+			{	"name": "X-wings",
+				"points": 13
+			},
+			{	"name": "Y-wings",
+				"points": 10
+			},
+			{	"name": "Dutch Vander",
+				"points": 16
+			},
+			{	"name": "Keyan Farlander",
+				"points": 20
+			},
+			{	"name": "Luke Skywalker",
+				"points": 20
+			},
+			{	"name": "Tycho Celchu",
+				"points": 16
+			},
+			{	"name": "Wedge Antilles",
+				"points": 19
+			}
+		],
+		"imperials": [
+			{	"name": "Tie Advanceds",
+				"points": 12
+			},
+			{	"name": "Tie Bombers",
+				"points": 9
+			},
+			{	"name": "Tie Fighters",
+				"points": 8
+			},
+			{	"name": "Tie Interceptors",
+				"points": 11
+			},
+			{	"name": "Darth Vader",
+				"points": 21
+			},
+			{	"name": "Howlrunner",
+				"points": 16
+			},
+			{	"name": "Major Ryhmer",
+				"points": 16
+			},
+			{	"name": "Mauler Mithel",
+				"points": 15
+			},
+			{	"name": "Sontir Fel",
+				"points": 18
+			}
+		]
+	};
+
 	// On faction selection, 
 	// scroll to flagship select
 	$(".faction-select").click(function(){
@@ -59,9 +120,27 @@ $(document).ready(function(){
 		faction = this.getAttribute("value");
 
 		// generate ship select options
-		
+		var flagship_select = document.getElementById("flagship-select");
+
+		for (var i = 0; i < ships[faction].length; i++) {
+			var opt = document.createElement('option');
+			opt.value = ships[faction][i].name;
+			opt.innerHTML = ships[faction][i].name_abbr + " - (" + 
+			                ships[faction][i].points + ")";
+			flagship_select.appendChild(opt);
+		}
 
 		// generate squadron select options
+		var squadron_select = document.getElementById("squadron-select");
+
+		for (var i = 0; i < squadrons[faction].length; i++) {
+			var opt = document.createElement('option');
+			opt.value = squadrons[faction][i].name;
+			opt.innerHTML = squadrons[faction][i].name + " - (" + 
+			                squadrons[faction][i].points + ")";
+			squadron_select.appendChild(opt);
+		}
+
 
 		// Show the hidden Ship data button on xs displays
 		$("#ship-data").removeClass("hidden").addClass("visible-xs");
@@ -71,6 +150,9 @@ $(document).ready(function(){
 	});
 
 	var armada_reset = function() {
-
+		// remove all ship options
+		$("#flagship-select").empty();
+		$("#squadron-select").empty();
 	};
+
 });
