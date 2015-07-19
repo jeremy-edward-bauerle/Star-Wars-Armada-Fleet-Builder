@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Star Wars Armada Fleet Builder</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/armada.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <h2>Star Wars Armada Fleet Builder</h2>
+    </header>
+    
+
+    <div class="container">
+      <div class="row" id="factions">
+        <h3>Choose a faction</h3>
+
+        <div class="col-xs-6">
+          <figure>
+            <img src="img/rebel-symbol.svg"
+                 class="faction-select"
+                 value="rebels">
+            <figcaption>Rebel Alliance</figcaption>
+          </figure>
+        </div>
+
+        <div class="col-xs-6">
+          <figure>
+            <img src="img/imperial-symbol.svg"
+                 class="faction-select"
+                 value="imperials">
+            <figcaption>Imperial Forces</figcaption>
+          </figure>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 hidden" 
+             id="fleet-list">
+
+          <div id="flagship">
+            <label for="flagship">Flagship: </label>
+            <select class="ship-select" name="flagship"></select>
+          </div>
+
+          <div id="squadron">
+            <label for="squadron">Squadron: </label>
+            <select  class="squadron-select" name="squadron"></select>
+          </div>
+
+        </div>
+
+        <!-- Opens modals with additional ship info -->
+        <div class="hidden-xs col-sm-4">
+          <h4>Galactic Hangar</h4>
+        </div>
+      </div>
+    </div>
+
+
+    <footer>
+      <div class="pull-right">
+        <span id="current-points">0</span>
+        /
+        <input type="text" id="max-points" placeholder="180"/>
+        points
+      </div>
+    </footer>
+    
+    <script src="js/jquery-2.1.4.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/armada.js"></script>
+  </body>
+</html>
