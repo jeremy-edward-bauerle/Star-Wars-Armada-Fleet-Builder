@@ -122,6 +122,8 @@ $(document).ready(function(){
 		// generate ship select options
 		var flagship_select = document.getElementById("flagship-select");
 
+		$("#flagship-select").append("<option selected disabled>Choose your flagship</option>");
+
 		for (var i = 0; i < ships[faction].length; i++) {
 			var opt = document.createElement('option');
 			opt.value = ships[faction][i].name;
@@ -132,6 +134,8 @@ $(document).ready(function(){
 
 		// generate squadron select options
 		var squadron_select = document.getElementById("squadron-select");
+
+		$("#squadron-select").append("<option selected disabled>Choose a squadron</option>");
 
 		for (var i = 0; i < squadrons[faction].length; i++) {
 			var opt = document.createElement('option');
@@ -155,4 +159,13 @@ $(document).ready(function(){
 		$("#squadron-select").empty();
 	};
 
+	// Create a new div with a ship select input inside
+	var create_new_ship_select() = function() {
+
+	};
+
+	// Create a new div with a squadron select input inside
+	var create_new_squadron_select() = function() {
+
+	};
 });
