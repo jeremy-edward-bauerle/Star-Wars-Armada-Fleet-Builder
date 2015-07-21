@@ -2,54 +2,54 @@ $(document).ready(function(){
 
 	var faction = "";
 	
-	var ships = {
+	var ship = {
 		  "rebels": [
-		    { "name": "Assault Frigate Mark II A",
-		      "name_abbr": "Mk II A",
+		    { "full_name": "Assault Frigate Mark II A",
+		      "name": "Mk II A",
 		      "points": 81
 		    },
-		    { "name": "Assault Frigate Mark II B",
-		      "name_abbr": "Mk II B",
+		    { "full_name": "Assault Frigate Mark II B",
+		      "name": "Mk II B",
 		      "points": 72
 		    },
-		    { "name": "CR90 Corvette A",
-		      "name_abbr": "CR90 A",
+		    { "full_name": "CR90 Corvette A",
+		      "name": "CR90 A",
 		      "points": 44
 		    },
-		    { "name": "CR90 Corvette B",
-		      "name_abbr": "CR90 B",
+		    { "full_name": "CR90 Corvette B",
+		      "name": "CR90 B",
 		      "points": 39
 		    },
-		    { "name": "Nebulon-B Escort Frigate",
-		      "name_abbr": "Neb-B Escort",
+		    { "full_name": "Nebulon-B Escort Frigate",
+		      "name": "Neb-B Escort",
 		      "points": 57
 		    },
-		    { "name": "Nebulon-B Supply Frigate",
-		      "name_abbr": "Neb-B Supply",
+		    { "full_name": "Nebulon-B Supply Frigate",
+		      "name": "Neb-B Supply",
 		      "points": 51
 		    },
 		  ],
 		  "imperials": [
-		    { "name": "Victory I-class Star Destoyer",
-		      "name_abbr": "Victory I",
+		    { "full_name": "Victory I-class Star Destoyer",
+		      "name": "Victory I",
 		      "points": 73
 		    },
-		    { "name": "Victory II-class Star Destoyer",
-		      "name_abbr": "Victory II",
+		    { "full_name": "Victory II-class Star Destoyer",
+		      "name": "Victory II",
 		      "points": 85
 		    },
-		    { "name": "Gladiator I-class Star Destoyer",
-		      "name_abbr": "Gladiator I",
+		    { "full_name": "Gladiator I-class Star Destoyer",
+		      "name": "Gladiator I",
 		      "points": 56
 		    },
-		    { "name": "Gladiator II-class Star Destoyer",
-		      "name_abbr": "Gladiator II",
+		    { "full_name": "Gladiator II-class Star Destoyer",
+		      "name": "Gladiator II",
 		      "points": 62
 		    }
 		  ]
 		};
 
-	var squadrons = {
+	var squadron = {
 		"rebels": [
 			{	"name": "A-wings",
 				"points": 11
@@ -120,31 +120,10 @@ $(document).ready(function(){
 		faction = this.getAttribute("value");
 
 		// generate ship select options
-		var flagship_select = document.getElementById("flagship-select");
-
-		$("#flagship-select").append("<option selected disabled>Choose your flagship</option>");
-
-		for (var i = 0; i < ships[faction].length; i++) {
-			var opt = document.createElement('option');
-			opt.value = ships[faction][i].name;
-			opt.innerHTML = ships[faction][i].name_abbr + " - (" + 
-			                ships[faction][i].points + ")";
-			flagship_select.appendChild(opt);
-		}
+		build_select_options("#flagship-select", faction, "ship");
 
 		// generate squadron select options
-		var squadron_select = document.getElementById("squadron-select");
-
-		$("#squadron-select").append("<option selected disabled>Choose a squadron</option>");
-
-		for (var i = 0; i < squadrons[faction].length; i++) {
-			var opt = document.createElement('option');
-			opt.value = squadrons[faction][i].name;
-			opt.innerHTML = squadrons[faction][i].name + " - (" + 
-			                squadrons[faction][i].points + ")";
-			squadron_select.appendChild(opt);
-		}
-
+		build_select_options("#initial-squadron-select", faction, "squadron");
 
 		// Show the hidden Ship data button on xs displays
 		$("#ship-data").removeClass("hidden").addClass("visible-xs");
@@ -153,19 +132,80 @@ $(document).ready(function(){
 
 	});
 
+	// Params:
+	//		target - the #id or .class to target
+	//		faction - rebel or imperial
+	//		ship_type - ship or squadron
+	var build_select_options = function(target, faction, ship_type) {
+		var select = $(target);
+
+		select.append("<option selected disabled>Choose a " + ship_type + " </option>");
+
+		var type = {};
+		if (ship_type == "ship")
+			type = ship;
+		else
+			type = squadron;
+
+		for (var i = 0; i < type[faction].length; i++) {
+			select.append(
+				"<option value=" + type[faction][i].points + ">" +
+				type[faction][i].name + " - (" +
+				type[faction][i].points + ")</option>");
+		}		
+	};
+
+
+	$("#flagship-select").change(function() {
+		// If no ship selects have been created yet...
+		if (! $(".ship-select").length) {
+			//... create one
+			var ship_select_div = " \
+				<div> \
+				<label for='ship'>Ship: </label> \
+				<select id='ship-1' class='ship-select' name='ship'></select> \
+				</div>";
+
+			$( ship_select_div ).insertAfter( $("#flagship-select").parent() );
+			
+			// Add the select options
+			build_select_options("#ship-1", faction, "ship");
+		}
+	});
+
+	$(document).on('change', '.ship-select', function() {
+	//$(".ship-select").change(function() {
+		// Find the total number of .ship-select divs
+		var index = $(".ship-select").length;
+		var new_index = index + 1;
+
+		var ship_select_div = "<div>" +  
+				"<label for='ship'>Ship: </label>" +
+				"<select id='ship-" + new_index + "' class='ship-select' name='ship'></select>" +
+				"</div>";
+
+		$( ship_select_div ).insertAfter( $("#ship-" + index).parent() );
+		
+		// Add the select options
+		build_select_options("#ship-" + new_index, faction, "ship");
+		
+	});
+
 	var armada_reset = function() {
 		// remove all ship options
 		$("#flagship-select").empty();
 		$("#squadron-select").empty();
 	};
 
+
+
 	// Create a new div with a ship select input inside
-	var create_new_ship_select() = function() {
+	var create_new_ship_select = function() {
 
 	};
 
 	// Create a new div with a squadron select input inside
-	var create_new_squadron_select() = function() {
+	var create_new_squadron_select = function() {
 
 	};
 });
