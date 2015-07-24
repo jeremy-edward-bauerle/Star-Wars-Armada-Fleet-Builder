@@ -174,9 +174,13 @@ $(document).ready(function(){
 	});
 
 	$(document).on('change', '.ship-select', function() {
-	//$(".ship-select").change(function() {
 		// Find the total number of .ship-select divs
 		var index = $(".ship-select").length;
+
+		// Check if the last .ship-select is in its default state
+		if ($(".ship-select")[index - 1].selectedIndex == 0)
+			return;
+
 		var new_index = index + 1;
 
 		var ship_select_div = "<div>" +  
