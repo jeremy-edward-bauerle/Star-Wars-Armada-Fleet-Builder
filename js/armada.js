@@ -110,8 +110,7 @@ $(document).ready(function(){
 		]
 	};
 
-	// On faction selection, 
-	// scroll to flagship select
+	// On faction selection, scroll to flagship select
 	$(".faction-select").click(function(){
 		// clear the previous selections
 		armada_reset();
@@ -196,20 +195,14 @@ $(document).ready(function(){
 	});
 
 	var armada_reset = function() {
-		// remove all ship options
+		// empty the flagship select options list
 		$("#flagship-select").empty();
-		$("#squadron-select").empty();
-	};
-
-
-
-	// Create a new div with a ship select input inside
-	var create_new_ship_select = function() {
+		// remove generated ship select elements
+		$(".ship-select").remove();
+		// empty initial squadron select options list
+		$("#initial-squadron-select").empty();
+		// remove generated squadron select elements
 
 	};
 
-	// Create a new div with a squadron select input inside
-	var create_new_squadron_select = function() {
-
-	};
 });
