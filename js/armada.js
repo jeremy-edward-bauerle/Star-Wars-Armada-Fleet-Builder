@@ -194,15 +194,54 @@ $(document).ready(function(){
 		
 	});
 
+	$("#initial-squadron-select").change(function() {
+		// If no ship selects have been created yet...
+		if (! $(".squadron-select").length) {
+			//... create one
+			var squadron_select_div = " \
+				<div> \
+				<label for='squadron'>Squadron: </label> \
+				<select id='squadron-1' class='squadron-select' name='squadron'></select> \
+				</div>";
+
+			$( squadron_select_div ).insertAfter( $("#initial-squadron-select").parent() );
+			
+			// Add the select options
+			build_select_options("#squadron-1", faction, "squadron");
+		}
+	});
+
+	$(document).on('change', '.squadron-select', function() {
+		// Find the total number of .squadron-select divs
+		var index = $(".squadron-select").length;
+
+		// Check if the last .squadron-select is in its default state
+		if ($(".squadron-select")[index - 1].selectedIndex == 0)
+			return;
+
+		var new_index = index + 1;
+
+		var squadron_select_div = "<div>" +  
+				"<label for='squadron'>Squadron: </label>" +
+				"<select id='squadron-" + new_index + "' class='squadron-select' name='squadron'></select>" +
+				"</div>";
+
+		$( squadron_select_div ).insertAfter( $("#squadron-" + index).parent() );
+		
+		// Add the select options
+		build_select_options("#squadron-" + new_index, faction, "squadron");
+		
+	});
+
 	var armada_reset = function() {
 		// empty the flagship select options list
 		$("#flagship-select").empty();
 		// remove generated ship select elements
-		$(".ship-select").remove();
+		$(".ship-select").parent().remove();
 		// empty initial squadron select options list
 		$("#initial-squadron-select").empty();
 		// remove generated squadron select elements
-
+		$(".squadron-select").parent().remove();
 	};
 
 });
